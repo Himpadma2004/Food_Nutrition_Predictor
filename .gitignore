@@ -9,12 +9,17 @@ __pycache__/
 
 # Large/generated assets
 best_model.keras
+food_dataset/
+dataset/
+data/
+logs/
+*.zip
+
+# Keep only required checkpoint files
 checkpoints/*
 !checkpoints/best_model.pth
 !checkpoints/class_mapping.json
 !checkpoints/class_names.pkl
-food_dataset/
-logs/
 
 # Virtual environments
 .venv/

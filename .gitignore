@@ -1,0 +1,19 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Large/generated assets
+best_model.keras
+checkpoints/
+food_dataset/
+logs/
+
+# Virtual environments
+.venv/
+venv/
+env/

@@ -1,0 +1,152 @@
+FOODS_LIST = [
+
+    # ==================================================
+    # 1. RICE & MAIN MEALS
+    # ==================================================
+
+    "Biryani",
+    "Chicken Biryani",
+    "Pulao",
+    "Jeera Rice",
+    "Fried Rice",
+    "Curd Rice",
+    "Lemon Rice",
+    "Sambar Rice",
+    "Khichdi",
+    "Rajma Chawal",
+    "Dal Rice",
+    "Veg Pulao",
+
+    # ==================================================
+    # 2. BREADS & ROTIS
+    # ==================================================
+
+    "Roti",
+    "Naan",
+    "Kulcha",
+    "Bhature",
+    "Poori",
+    "Paratha",
+    "Aloo Paratha",
+    "Thepla",
+    "Khakhra",
+    "Butter Naan",
+
+    # ==================================================
+    # 3. CURRIES & MAIN COURSE
+    # ==================================================
+
+    "Paneer Butter Masala",
+    "Palak Paneer",
+    "Kadai Paneer",
+    "Malai Kofta",
+    "Dal Makhani",
+    "Chole",
+    "Rajma",
+    "Butter Chicken",
+    "Chicken Curry",
+    "Mutton Curry",
+    "Shahi Paneer",
+    "Paneer Tikka Masala",
+    "Kadhi",
+    "Aloo Gobi",
+    "Mixed Veg Curry",
+
+    # ==================================================
+    # 4. STREET FOOD & SNACKS
+    # ==================================================
+
+    "Pani Puri",
+    "Sev Puri",
+    "Bhel Puri",
+    "Pav Bhaji",
+    "Misal Pav",
+    "Vada Pav",
+    "Dabeli",
+    "Samosa",
+    "Kachori",
+    "Momos",
+    "Pakora",
+    "Bread Pakora",
+    "Aloo Tikki",
+    "Chole Bhature",
+    "Chaat",
+    "Frankie Roll",
+
+    # ==================================================
+    # 5. GUJARATI FOODS
+    # ==================================================
+
+    "Dhokla",
+    "Khaman",
+    "Handvo",
+    "Undhiyu",
+    "Khichu",
+    "Dal Dhokli",
+    "Patra",
+    "Sev Tameta",
+    "Gujarati Kadhi",
+    "Fafda",
+
+    # ==================================================
+    # 6. SOUTH INDIAN FOODS
+    # ==================================================
+
+    "Dosa",
+    "Masala Dosa",
+    "Idli",
+    "Medu Vada",
+    "Uttapam",
+    "Appam",
+    "Pongal",
+    "Rasam",
+
+    # ==================================================
+    # 7. SWEETS & DESSERTS
+    # ==================================================
+
+    "Gulab Jamun",
+    "Rasgulla",
+    "Jalebi",
+    "Kaju Katli",
+    "Rasmalai",
+    "Ladoo",
+    "Barfi",
+    "Mysore Pak",
+    "Halwa",
+    "Rabri",
+    "Shrikhand",
+    "Modak",
+    "Kulfi",
+    "Gajar Halwa",
+    "Peda",
+
+    # ==================================================
+    # 8. FAST FOOD / URBAN FOODS
+    # ==================================================
+
+    "Pizza",
+    "Burger",
+    "Sandwich",
+    "Pasta",
+
+    # ==================================================
+    # 9. REGIONAL THALIS
+    # ==================================================
+
+    "Gujarati Thali",
+    "Kathiyawadi Thali",
+    "Punjabi Thali",
+    "Rajasthani Thali",
+    "South Indian Thali",
+    "Kerala Sadya",
+    "Andhra Thali",
+    "Bengali Thali",
+    "Maharashtrian Thali",
+    "Hyderabadi Thali",
+    "Goan Thali",
+    "Kashmiri Wazwan",
+    "Tamil Nadu Thali",
+    "Karnataka Thali",
+    "Udupi Thali"
+]

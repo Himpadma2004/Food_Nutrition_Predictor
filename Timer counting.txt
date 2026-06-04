@@ -1,0 +1,22 @@
+🚀 Starting 1 categories
+
+🍛 Processing: Taco
+🎯 Target: 200
+🔍 Running 10 queries...
+   → Taco authentic
+   → Taco restaurant
+   → Taco close up
+   → Taco homemade
+   → Taco Indian food
+   → Taco dish
+   → Taco hd image
+   → Taco traditional food
+   → Taco plate
+   → Taco meal
+🔗 URLs found: 221
+ 59%|███████████████████████████████████████████████████████████▍                                         | 130/221 [04:42<02:37,  1.73s/it]C:\Python311\Lib\site-packages\PIL\Image.py:1137: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████▌| 220/221 [07:56<00:02,  2.17s/it]
+✅ Finished Taco: 200/200
+⏱️ Scraping Time: 8.00 minutes
+⏳ Cooling 6.8s

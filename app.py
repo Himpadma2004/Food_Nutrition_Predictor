@@ -13,8 +13,8 @@ from albumentations.pytorch import ToTensorV2
 from pathlib import Path
 
 from nutrition_data import (
-    get_nutrition, scale_nutrition,
-    get_daily_pct, get_health_tags, ICMR_RDA
+    get_nutrition, scale_nutrition, get_daily_pct,
+    get_health_tags, ICMR_RDA, is_dual_class
 )
 
 # ─────────────────────────────────────────────────────────
@@ -374,7 +374,84 @@ def make_calorie_gauge(calories, daily=2000):
 # NUTRITION RENDERER
 # ─────────────────────────────────────────────────────────
 def render_nutrition(food_key, grams):
-    raw = get_nutrition(food_key)
+
+    st.markdown('<div class="section-head">🥗 Nutrition Information</div>',
+                unsafe_allow_html=True)
+
+    # ── Veg / Non-veg toggle for ambiguous classes ────────
+    variant = 'veg'
+    if is_dual_class(food_key):
+        st.markdown(f"""
+        <div style='background:#1a1a2e;border:1px solid #f7931e44;border-radius:10px;
+                    padding:12px 16px;margin-bottom:16px;'>
+            <span style='color:#f7931e;font-weight:700;font-size:0.95rem;'>
+                🥩 This dish can be Veg or Non-Veg — select your variant:
+            </span>
+        </div>
+        """, unsafe_allow_html=True)
+
+        col_toggle, _ = st.columns([1, 2])
+        with col_toggle:
+            choice = st.radio(
+                "Variant",
+                ["🥦 Vegetarian", "🍗 Non-Vegetarian"],
+                horizontal=True,
+                label_visibility="collapsed",
+                key=f"variant_{food_key}",
+            )
+        variant = 'veg' if '🥦' in choice else 'nonveg'
+
+        # Show comparison table of both variants side by side
+        veg_raw    = get_nutrition(food_key, 'veg')
+        nonveg_raw = get_nutrition(food_key, 'nonveg')
+        veg_s      = scale_nutrition(veg_raw,    grams)
+        nonveg_s   = scale_nutrition(nonveg_raw, grams)
+
+        st.markdown("##### 📊 Veg vs Non-Veg Comparison")
+        cmp_cols = st.columns(2, gap="medium")
+        DISPLAY = [
+            ('🔥 Calories', 'calories', 'kcal'),
+            ('🍞 Carbs',    'carbs',    'g'),
+            ('💪 Protein',  'protein',  'g'),
+            ('🧈 Fat',      'fat',      'g'),
+            ('🌾 Fiber',    'fiber',    'g'),
+            ('🍬 Sugar',    'sugar',    'g'),
+            ('🧂 Sodium',   'sodium',   'mg'),
+        ]
+        with cmp_cols[0]:
+            st.markdown("""
+            <div class="nutr-card">
+            <div class="nutr-title">🥦 Vegetarian</div>
+            """, unsafe_allow_html=True)
+            rows = ''
+            for label, key, unit in DISPLAY:
+                rows += f"""<div class="fact-row">
+                    <span class="fact-key">{label}</span>
+                    <span class="fact-val">{veg_s[key]}{unit}</span>
+                </div>"""
+            st.markdown(rows + '</div>', unsafe_allow_html=True)
+
+        with cmp_cols[1]:
+            st.markdown("""
+            <div class="nutr-card">
+            <div class="nutr-title">🍗 Non-Vegetarian</div>
+            """, unsafe_allow_html=True)
+            rows = ''
+            for label, key, unit in DISPLAY:
+                diff  = round(nonveg_s[key] - veg_s[key], 1)
+                arrow = f'<span style="color:#e74c3c;font-size:0.75rem"> ▲{diff}</span>' if diff > 0 \
+                   else f'<span style="color:#2ecc71;font-size:0.75rem"> ▼{abs(diff)}</span>' if diff < 0 \
+                   else ''
+                rows += f"""<div class="fact-row">
+                    <span class="fact-key">{label}</span>
+                    <span><span class="fact-val">{nonveg_s[key]}{unit}</span>{arrow}</span>
+                </div>"""
+            st.markdown(rows + '</div>', unsafe_allow_html=True)
+
+        st.markdown("---")
+
+    # ── Get nutrition for selected variant ───────────────
+    raw = get_nutrition(food_key, variant)
     if raw is None:
         st.warning(f"⚠️ Nutrition data not available for **{food_key}**.")
         return
@@ -382,9 +459,6 @@ def render_nutrition(food_key, grams):
     nutr = scale_nutrition(raw, grams)
     pct  = get_daily_pct(raw, grams)
     tags = get_health_tags(raw, grams)
-
-    st.markdown('<div class="section-head">🥗 Nutrition Information</div>',
-                unsafe_allow_html=True)
 
     # Calorie gauge — full width
     fig_g = make_calorie_gauge(nutr['calories'])
@@ -564,12 +638,21 @@ if input_mode == "📁 Upload Image":
 else:  # Camera
     st.markdown(
         '<p style="color:#888;font-size:0.85rem;margin-bottom:8px;">'
-        '📱 Allow camera access when prompted · Works best with a clear, single-dish photo</p>',
+        '📱 Click <b>Take Photo</b> below · Allow browser camera access if prompted · '
+        'Works on Chrome/Edge · Use Upload if camera is unavailable</p>',
         unsafe_allow_html=True,
     )
-    camera_img = st.camera_input("Take a photo of your food")
-    if camera_img:
-        pil_img = Image.open(camera_img).convert('RGB')
+    camera_img = st.camera_input(
+        label="Take a photo of your food",
+        key="camera_capture",
+        label_visibility="collapsed",
+    )
+    if camera_img is not None:
+        try:
+            from io import BytesIO
+            pil_img = Image.open(BytesIO(camera_img.getvalue())).convert('RGB')
+        except Exception as e:
+            st.error(f"❌ Could not read camera image: {e}. Please try Upload instead.")
 
 st.markdown('</div>', unsafe_allow_html=True)
 
